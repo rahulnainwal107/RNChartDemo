@@ -10,8 +10,11 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "immutability-helper": "^3.0.2",
+    "lodash": "^4.17.15",
     "react": "16.11.0",
-    "react-native": "0.62.2"
+    "react-native": "0.62.2",
+    "react-native-charts-wrapper": "^0.5.7"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
