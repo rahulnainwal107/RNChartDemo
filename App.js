@@ -1,35 +1,3 @@
-// import React from 'react';
-// import {AppRegistry, StyleSheet, Text, View, processColor} from 'react-native';
-
-// import {LineChart} from 'react-native-charts-wrapper';
-
-// export default class App extends React.Component {
-//   render() {
-//     return (
-//       <View style={{flex: 1}}>
-//         <View style={styles.container}>
-//           <LineChart
-//             style={styles.chart}
-//             data={{
-//               dataSets: [{label: 'demo', values: [{y: 1}, {y: 2}, {y: 1}]}],
-//             }}
-//           />
-//         </View>
-//       </View>
-//     );
-//   }
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#F5FCFF',
-//   },
-//   chart: {
-//     flex: 1,
-//   },
-// });
-
 import React from 'react';
 import {
   AppRegistry,
@@ -51,7 +19,7 @@ class App extends React.Component {
 
     this.state = {
       legend: {
-        enabled: true,
+        enabled: false,
         textSize: 14,
         form: 'SQUARE',
         formSize: 14,
@@ -62,7 +30,15 @@ class App extends React.Component {
         maxSizePercent: 0.5,
       },
       animation: {
-        durationX: 3000,
+        // durationX: 1500,
+        // durationY: 1500,
+        // easingX: 'EaseInCirc',
+        durationX: 0,
+        durationY: 1500,
+        easingY: 'EaseInOutQuart',
+      },
+      visibleRange: {
+        x: {min: 0, max: 50},
       },
       data: {
         dataSets: [
@@ -116,47 +92,68 @@ class App extends React.Component {
               {shadowH: 93.57, shadowL: 92.46, open: 93.48, close: 92.51},
               {shadowH: 92.78, shadowL: 89.47, open: 92.72, close: 90.32},
               {shadowH: 91.67, shadowL: 90, open: 90, close: 90.52},
+              {shadowH: 97.88, shadowL: 94.25, open: 97.61, close: 94.8075},
+              {shadowH: 94.72, shadowL: 92.51, open: 93.99, close: 93.75},
+              {shadowH: 94.08, shadowL: 92.4, open: 93.965, close: 93.65},
+              {shadowH: 95.74, shadowL: 93.68, open: 94.2, close: 95.18},
+              {shadowH: 95.9, shadowL: 93.82, open: 95.2, close: 94.19},
+              {shadowH: 94.07, shadowL: 92.68, open: 94, close: 93.24},
+              {shadowH: 93.45, shadowL: 91.85, open: 93.37, close: 92.72},
+              {shadowH: 93.77, shadowL: 92.59, open: 93, close: 92.82},
+              {shadowH: 93.57, shadowL: 92.11, open: 93.33, close: 93.39},
+              {shadowH: 93.57, shadowL: 92.46, open: 93.48, close: 92.51},
+              {shadowH: 92.78, shadowL: 89.47, open: 92.72, close: 90.32},
+              {shadowH: 91.67, shadowL: 90, open: 90, close: 90.52},
             ],
 
             label: 'Bar dataSet',
             config: {
-              //highlightColor: processColor('darkgray'),
-              //shadowColor: processColor('black'),
+              //mode: "CUBIC_BEZIER",
+              highlightColor: processColor('grey'),
+              shadowColor: processColor('black'),
               shadowWidth: 1,
               shadowColorSameAsCandle: true,
-              increasingColor: processColor('#71BD6A'),
+              increasingColor: processColor('green'),
               increasingPaintStyle: 'FILL',
-              decreasingColor: processColor('#D14B5A'),
+              decreasingColor: processColor('red'),
+              colors: [processColor('green')],
+              axisDependency: 'RIGHT',
+              //valueFormatter: ['Transportation $100,000'],
+              valueTextColor: processColor('white'),
             },
             xAxis: {
-              drawGridLines: false,
-              position: 'BOTTOM',
+              // drawGridLines: false,
+              // position: 'BOTTOM',
             },
             yAxis: {
-              left: {
-                axisLineColor: processColor('green'),
-                gridColor: processColor('red'),
-                labelCount: 6,
-                labelCountForce: false,
-              },
-              right: {
-                enabled: false,
-                drawLabels: false,
-                drawAxisLine: true,
-                axisLineColor: processColor('black'),
-                drawGridLines: false,
-              },
+              // left: {
+              //   axisLineColor: processColor('green'),
+              //   gridColor: processColor('red'),
+              //   labelCount: 6,
+              //   labelCountForce: false,
+              // },
+              // right: {
+              //   enabled: false,
+              //   drawLabels: false,
+              //   drawAxisLine: true,
+              //   axisLineColor: processColor('black'),
+              //   drawGridLines: false,
+              // },
             },
           },
         ],
       },
       marker: {
         enabled: true,
-        markerColor: processColor('#2c3e50'),
-        textColor: processColor('red'),
-        backgroundTint: 'teal',
+        markerColor: processColor('grey'),
+        textColor: processColor('white'),
+        markerFontSize: 14,
+        digits: 2,
+        backgroundTint: processColor('teal'),
       },
-      zoomXValue: 0,
+      zoomXValue: {
+        $set: 1,
+      },
     };
 
     this.x = 0;
@@ -167,29 +164,50 @@ class App extends React.Component {
       update(this.state, {
         xAxis: {
           $set: {
+            granularity: 1,
+            granularityEnabled: true,
             drawLabels: true,
             drawGridLines: false,
             position: 'BOTTOM',
-            yOffset: 5,
-
-            limitLines: _.times(
-              this.state.data.dataSets[0].values.length / 5,
-              (i) => {
-                return {
-                  //limit: 5 * (i + 1) + 0.5,
-                  lineColor: processColor('darkgray'),
-                  lineWidth: 1,
-                  label: (i + 1).toString(),
-                };
-              },
-            ),
+            Offset: 5,
+            // limitLines: _.times(
+            //   this.state.data.dataSets[0].values.length / 5,
+            //   (i) => {
+            //     return {
+            //       limit: null,
+            //       lineColor: processColor('darkgray'),
+            //       lineWidth: 1,
+            //       label: (i + 1).toString(),
+            //     };
+            //   },
+            // ),
+            textColor: processColor('white'),
+            textSize: 12,
+            //gridColor: processColor('red'),
+            //gridLineWidth: 1,
+            axisLineColor: processColor('grey'),
+            axisLineWidth: 1,
+            // gridDashedLine: {
+            //   lineLength: 10,
+            //   spaceLength: 10
+            // },
+            labelCount: 6,
+            avoidFirstLastClipping: true,
           },
         },
         yAxis: {
           $set: {
             left: {
+              enabled: false,
               valueFormatter: '$ #',
               drawGridLines: false,
+              textColor: processColor('white'),
+              textSize: 12,
+              axisLineColor: processColor('grey'),
+              axisLineWidth: 1,
+              // granularityEnabled: true,
+              // granularity: 10,
+              //axisMaximum: 12000,
               limitLines: [
                 {
                   limit: 200.4,
@@ -206,13 +224,20 @@ class App extends React.Component {
               ],
             },
             right: {
-              enabled: false,
+              enabled: true,
               drawGridLines: false,
+              valueFormatter: '#',
+              textColor: processColor('white'),
+              textSize: 12,
+              axisLineColor: processColor('grey'),
+              axisLineWidth: 1,
+              // granularityEnabled: true,
+              // granularity: 10,
             },
           },
         },
         zoomXValue: {
-          $set: 1000,
+          $set: 1,
         },
       }),
     );
@@ -249,16 +274,28 @@ class App extends React.Component {
               yAxis={this.state.yAxis}
               maxVisibleValueCount={10}
               autoScaleMinMaxEnabled={true}
-              // zoom={{scaleX: 2, scaleY: 1, xValue:  400000, yValue: 1}}
-              zoom={
-                {
-                  // scaleX: 1,
-                  // scaleY: 0,
-                  // xValue: 40000,
-                  // yValue: 0,
-                  // axisDependency: 'LEFT',
-                }
-              }
+              doubleTapToZoomEnabled={false}
+              animation={this.state.animation}
+              drawValueAboveBar={true}
+              touchEnabled={true}
+              dragEnabled={true}
+              //scaleEnabled={true}
+              pinchZoom={false}
+              scaleXEnabled={true}
+              scaleYEnabled={false}
+              visibleRange={this.state.visibleRange}
+              drawBorders={false}
+              // dragDecelerationEnabled={true}
+              // dragDecelerationFrictionCoef={0.99}
+              // keepPositionOnRotation={false}
+
+              zoom={{
+                scaleX: 0,
+                scaleY: 0,
+                xValue: 400,
+                yValue: 0,
+                axisDependency: 'RIGHT',
+              }}
               onSelect={this.handleSelect.bind(this)}
               ref="chart"
               onChange={(event) => console.log(event.nativeEvent)}
@@ -272,10 +309,12 @@ class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     height: 300,
-    backgroundColor: '#F5FCFF',
+    paddingVertical: 10,
+    backgroundColor: '#fff',
   },
   chart: {
     flex: 1,
+    backgroundColor: 'black',
   },
 });
 
