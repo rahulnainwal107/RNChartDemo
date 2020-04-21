@@ -258,7 +258,7 @@ class App extends React.Component {
     return (
       <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
         <View style={{flex: 1}}>
-          <View style={{flex: 1}}>
+          <View>
             <Text> selected entry</Text>
             <Text> {this.state.selectedEntry}</Text>
           </View>
@@ -310,7 +310,6 @@ const styles = StyleSheet.create({
   container: {
     height: 300,
     paddingVertical: 10,
-    backgroundColor: '#fff',
   },
   chart: {
     flex: 1,
