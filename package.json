@@ -7,15 +7,27 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "clean:build:android": "rm -rf android/app/build",
+    "prod:android": "npm run clean:build:android  && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "build:assets": "fc-build-assets --fc-template ./assets/fusioncharts.html --fc-library ./assets/fusioncharts"
   },
   "dependencies": {
+    "clchart": "^0.1.0",
+    "fusioncharts": "^3.14.0",
     "immutability-helper": "^3.0.2",
+    "lightweight-charts": "^2.0.0",
     "lodash": "^4.17.15",
+    "native-echarts": "^0.5.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
     "react-native-charts-wrapper": "^0.5.7",
-    "react-native-webview": "^9.2.2"
+    "react-native-f2chart": "^1.1.0",
+    "react-native-fusioncharts": "^4.1.2",
+    "react-native-svg": "^11.0.1",
+    "react-native-svg-charts": "^5.4.0",
+    "react-native-webview": "^9.2.2",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

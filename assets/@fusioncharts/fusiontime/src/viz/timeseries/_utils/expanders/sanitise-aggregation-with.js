@@ -1,0 +1,1 @@
+var DEFAULT_AGGREGATION="avg";export default function(aggStore){return function(aggregation){var agg=aggregation==null?DEFAULT_AGGREGATION:aggregation,lowerAgg=agg.toLowerCase();if(aggStore.getDefaultAggregations()[lowerAgg]){return lowerAgg}else if(aggStore.getRegisteredAggregations()[agg]){return agg}return DEFAULT_AGGREGATION}}

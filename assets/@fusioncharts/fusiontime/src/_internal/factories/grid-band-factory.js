@@ -1,0 +1,1 @@
+import GridBand from"../components/grid-bands";export default function(canvas){var canvasConfig=canvas.config,gridBand;if(canvasConfig.gridBandSupported&&canvasConfig.showGridBand){gridBand=canvas.attachChild(GridBand,"gridBand");gridBand.configure({style:canvasConfig.gridBandStyle})}}

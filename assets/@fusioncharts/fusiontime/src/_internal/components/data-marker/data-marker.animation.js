@@ -1,0 +1,1 @@
+import{pluckNumber}from"@fusioncharts/core/src/lib";var appearing=function appearing(inputJSON){return[{initialAttr:{opacity:0},finalAttr:{opacity:pluckNumber(inputJSON.attr.opacity,1)},slot:"final"}]},markerAnimation=function markerAnimation(){return{"*.appearing":appearing}};export default{"initial.dataMarker.dataMarker":markerAnimation};
