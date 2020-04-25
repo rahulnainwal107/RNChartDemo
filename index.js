@@ -16,7 +16,9 @@ import LineChartDemo from './LineChartDemo';
 import SvgChartDemo from './SvgChartDemo';
 import SvgChartDemo2 from './SvgChartDemo2';
 import CoinbasePro from './CoinbasePro/';
+import VictoryNativeChart from './VictoryNativeChart';
+import VictoryNativeChart1 from './VictoryNativeChart1';
 
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => CoinbasePro);
+AppRegistry.registerComponent(appName, () => VictoryNativeChart1);
