@@ -48,24 +48,6 @@ class LineChartDemo extends React.Component {
                 ],
                 label: 'A',
               },
-              {
-                values: [
-                  {x: 4, y: 105},
-                  {x: 5, y: 90},
-                  {x: 6, y: 130},
-                  {x: 7, y: 100},
-                ],
-                label: 'B',
-              },
-              {
-                values: [
-                  {x: 4, y: 110},
-                  {x: 5, y: 110},
-                  {x: 6, y: 105},
-                  {x: 7, y: 115},
-                ],
-                label: 'C',
-              },
             ],
           },
         },

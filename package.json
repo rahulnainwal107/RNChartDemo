@@ -13,6 +13,7 @@
     "build:assets": "fc-build-assets --fc-template ./assets/fusioncharts.html --fc-library ./assets/fusioncharts"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "fusioncharts": "^3.14.0",
     "immutability-helper": "^3.0.2",
     "lightweight-charts": "^2.0.0",
@@ -23,6 +24,7 @@
     "native-echarts": "^0.5.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-chart-kit": "^5.5.0",
     "react-native-charts-wrapper": "^0.5.7",
     "react-native-f2chart": "^1.1.0",
     "react-native-fusioncharts": "^4.1.2",
@@ -35,6 +37,7 @@
     "react-native-svg-charts": "^5.4.0",
     "react-native-vector-icons": "^6.6.0",
     "react-native-webview": "^9.2.2",
+    "recharts": "^1.8.5",
     "styled-components": "^5.1.0",
     "victory-native": "^34.1.0"
   },

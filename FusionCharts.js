@@ -1,64 +1,82 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View, Button, Alert } from 'react-native';
 import FusionCharts from 'react-native-fusioncharts';
-export default class PlainColumn2D extends Component {
+
+const jsonify = res => res.json();
+// This is the remote url to fetch the data.
+const dataFetch = fetch(
+  'https://s3.eu-central-1.amazonaws.com/fusion.store/ft/data/area-chart-with-time-axis-data.json'
+).then(jsonify);
+// This is the remote url to fetch the schema.
+const schemaFetch = fetch(
+  'https://s3.eu-central-1.amazonaws.com/fusion.store/ft/schema/area-chart-with-time-axis-schema.json'
+).then(jsonify);
+
+export default class AreaTimeAxis extends Component {
   constructor(props) {
     super(props);
-    //STEP 2 - Chart Data
-    const chartData = [
-      {label: 'Venezuela', value: '290'},
-      {label: 'Saudi', value: '260'},
-      {label: 'Canada', value: '180'},
-      {label: 'Iran', value: '140'},
-      {label: 'Russia', value: '115'},
-      {label: 'UAE', value: '100'},
-      {label: 'US', value: '30'},
-      {label: 'China', value: '30'},
-    ];
-    //STEP 3 - Chart Configurations
-    const chartConfig = {
-      type: 'column2d',
+    this.apiCaller = null;
+    this.state = {
+      type: 'timeseries',
       width: '100%',
-      height: '400',
+      height: '100%',
       dataFormat: 'json',
+      chartType: '',
       dataSource: {
         chart: {
-          caption: 'Countries With Most Oil Reserves [2017-18]',
-          subCaption: 'In MMbbl = One Million barrels',
-          xAxisName: 'Country',
-          yAxisName: 'Reserves (MMbbl)',
-          numberSuffix: 'K',
-          theme: 'fusion',
+          showLegend: 0
         },
-        data: chartData,
+        caption: {
+          text: 'Daily Visitors Count of a Website'
+        },
+        yAxis: [
+          {
+            plot: {
+              value: 'Daily Visitors',
+              type: 'area'
+            },
+            title: 'Daily Visitors (in thousand)'
+          }
+        ],
+        // Initially data is set as null
+        data: null
       },
+      schemaJson: null,
+      dataJson: null
     };
-    this.state = chartConfig;
     this.libraryPath = Platform.select({
       // Specify fusioncharts.html file location
-      android: {
-        uri: 'file:///android_asset/fusioncharts.html',
-      },
-      ios: require('./assets/fusioncharts.html'),
+      android: { uri: 'file:///android_asset/fusioncharts.html' },
+      ios: require('./assets/fusioncharts.html')
     });
   }
+
+  // We are creating the DataTable immidietly after the component is mounted
+  componentDidMount() {
+    Promise.all([dataFetch, schemaFetch]).then(res => {
+      const data = res[0];
+      const schema = res[1];
+      this.setState({ dataJson: data, schemaJson: schema });
+    });
+  }
+
   render() {
     return (
-      <SafeAreaView style={{flex: 1}}>
-        <View style={styles.container}>
-          <Text style={styles.header}>A Column 2D Chart</Text>
-          <View style={styles.chartContainer}>
-            <FusionCharts
-              type={this.state.type}
-              width={this.state.width}
-              height={this.state.height}
-              dataFormat={this.state.dataFormat}
-              dataSource={this.state.dataSource}
-              libraryPath={this.libraryPath} // set the libraryPath property
-            />
-          </View>
+      <View style={styles.container}>
+        <Text style={styles.header}>Area Chart with Time Axis</Text>
+        <View style={styles.chartContainer}>
+          <FusionCharts
+            dataJson={this.state.dataJson}
+            schemaJson={this.state.schemaJson}
+            type={this.state.type}
+            width={this.state.width}
+            height={this.state.height}
+            dataFormat={this.state.dataFormat}
+            dataSource={this.state.dataSource}
+            libraryPath={this.libraryPath} // set the libraryPath property
+          />
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
@@ -66,20 +84,17 @@ export default class PlainColumn2D extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-    padding: 10,
+    padding: 10
   },
-
   header: {
     fontWeight: 'bold',
     fontSize: 20,
     textAlign: 'center',
-    paddingBottom: 10,
+    paddingBottom: 10
   },
-
   chartContainer: {
     height: 400,
     borderColor: '#000',
-    borderWidth: 1,
-  },
+    borderWidth: 1
+  }
 });

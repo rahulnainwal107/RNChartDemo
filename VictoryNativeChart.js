@@ -6,6 +6,7 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryAxis,
+  VictoryLine,
   VictoryCandlestick,
 } from 'victory-native';
 
@@ -32,12 +33,13 @@ class VictoryNativeChart extends Component {
           width={350}
           height={200}
           marginBottom={10}
-          theme={VictoryTheme.material}>
+          //theme={VictoryTheme.material}
+        >
           <VictoryBar data={data} x="quarter" y="earnings" />
         </VictoryChart>
 
         <VictoryChart
-          theme={VictoryTheme.material}
+          //theme={VictoryTheme.material}
           domainPadding={{x: 25}}
           scale={{x: 'time'}}
           height={200}
@@ -47,6 +49,21 @@ class VictoryNativeChart extends Component {
           <VictoryCandlestick
             candleColors={{positive: '#5f5c5b', negative: '#c43a31'}}
             data={sampleDataDates}
+          />
+        </VictoryChart>
+        <VictoryChart width={350} height={200} marginBottom={10}>
+          <VictoryLine />
+        </VictoryChart>
+        <VictoryChart width={350} height={200} marginBottom={10}>
+          <VictoryLine
+            data={[
+              {x: 0, y: 1},
+              {x: 1, y: 3},
+              {x: 2, y: 2},
+              {x: 3, y: 4},
+              {x: 4, y: 3},
+              {x: 5, y: 5},
+            ]}
           />
         </VictoryChart>
       </ScrollView>
