@@ -28,8 +28,9 @@ import App from './App';
 //import DepthCHart1 from './DepthCHart1';
 //import CombineChart from './CombineChart';
 //import HeighChart from './HeighChart';
-import HeighChart1 from './HeighChart1';
+import HighChart1 from './HighChart1';
+import HighChart2 from './HighChart2';
 
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => HeighChart1);
+AppRegistry.registerComponent(appName, () => HighChart2);

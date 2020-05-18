@@ -64,32 +64,44 @@ const HeighChart1 = () => {
   const apiBack = axios.create({
     baseURL:
       'https://poloniex.com/public?command=returnOrderBook&currencyPair=BTC_ETH&depth=50',
-    timeout: 1000,
+    //timeout: 1000,
   });
+
   useEffect(() => {
     apiBack
       .get('')
       .then((res) =>
         setState({...state, bids: res.data.bids, asks: res.data.asks}),
       );
-  }, []);
+  }, [state]);
 
   var conf = {
     chart: {
       type: 'area',
-      animation: Highcharts.svg, // don't animate in old IE
+      animation: false, // don't animate in old IE
       marginRight: 10,
-      // events: {
-      //   load: function () {
-      //     // set up the updating of the chart each second
-      //     var series = this.series[0];
-      //     setInterval(function () {
-      //       var x = new Date().getTime(), // current time
-      //         y = Math.random();
-      //       series.addPoint([x, y], true, true);
-      //     }, 1000);
-      //   },
-      // },
+      center: [0.0],
+      threshold: 0,
+      events: {
+        load: function () {
+          // set up the updating of the chart each second
+          let series1 = [],
+            series2 = [];
+          setInterval(function () {
+            apiBack.get('').then((res) => {
+              res.data.bids.map((item, index) => {
+                if (JSON.stringify(item) !== JSON.stringify(state.bids[index]))
+                  series1.push(item);
+              });
+              res.data.asks.map((item, index) => {
+                if (JSON.stringify(item) !== JSON.stringify(state.asks[index]))
+                  series2.push(item);
+              });
+            });
+            setState({...state, bids: series1, asks: series2});
+          }, 2000);
+        },
+      },
     },
     title: {
       text: 'Live random data',
@@ -168,6 +180,7 @@ const HeighChart1 = () => {
     series: [
       {
         name: 'Bids',
+        type: 'area',
         // data: [
         //   [0.1435, 242.521842],
         //   [0.1436, 206.49862099999999],
@@ -196,6 +209,7 @@ const HeighChart1 = () => {
       },
       {
         name: 'Asks',
+        type: 'area',
         // data: [
         //   [0.1524, 0.948665],
         //   [0.1539, 35.510715],
@@ -233,6 +247,7 @@ const HeighChart1 = () => {
       thousandsSep: '.',
     },
   };
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'green'}}>
       <View style={{flex: 1, backgroundColor: 'black'}}>
