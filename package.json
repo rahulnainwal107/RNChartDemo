@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@highcharts/highcharts-react-native": "^2.2.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.2",
     "fusioncharts": "^3.14.0",
     "immutability-helper": "^3.0.2",
     "lightweight-charts": "^2.0.0",
